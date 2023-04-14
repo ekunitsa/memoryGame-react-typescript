@@ -2,12 +2,18 @@ export interface Options {
     pairCount: number;
     time: number;
     lifes: number;
+    language: string;
 }
 
 export interface TimerInterface {
     time: number;
     timerIsActive: boolean;
     timeIsOver: () => void;
+}
+
+export interface LifesInterface {
+    life: number;
+    lifeIsOver: () => void;
 }
 
 export interface GameFieldOptions {

@@ -13,7 +13,8 @@ const App: React.FC = () => {
     const [options, setOptions] = useState<Options>({
         pairCount: 6,
         time: 0,
-        lifes: 0
+        lifes: 0,
+        language: 'default'
     })
 
     const startGame = () => {
