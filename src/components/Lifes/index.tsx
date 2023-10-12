@@ -1,5 +1,5 @@
-import React from 'react'
-import { LifesInterface } from '../../global.model'
+import React from 'react';
+import { LifesInterface } from '../../global.model';
 
 const Lifes: React.FC<LifesInterface> = ({life}) => {
     const OneLife = () => <span>&#10084;</span>
@@ -11,4 +11,4 @@ const Lifes: React.FC<LifesInterface> = ({life}) => {
     )
 }
 
-export default Lifes
+export default Lifes;

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { TimerInterface } from '../../global.model'
+import React, { useEffect, useState } from 'react';
+import { TimerInterface } from '../../global.model';
 
 const Timer: React.FC<TimerInterface> = ({time, timerIsActive, timeIsOver}) => {
-    const [timer, setTimer] = useState<number>(time)
+    const [timer, setTimer] = useState<number>(time);
 
     useEffect(() => {
         if (timer > 0 && timerIsActive) {
             const interval = setInterval(() => {
                 setTimer(prevState => --prevState)
-            }, 1000)
+            }, 1000);
             return () => clearInterval(interval);
         } else if (timer <= 0) {
             // game end
@@ -23,4 +23,4 @@ const Timer: React.FC<TimerInterface> = ({time, timerIsActive, timeIsOver}) => {
     )
 }
 
-export default Timer
+export default Timer;

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Navbar, Container } from "react-bootstrap"
+import React from 'react';
+import { Navbar, Container } from 'react-bootstrap';
 
 const Header: React.FC = () => {
     return (
@@ -11,4 +11,4 @@ const Header: React.FC = () => {
     )
 }
 
-export default Header
+export default Header;

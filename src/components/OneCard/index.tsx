@@ -1,13 +1,13 @@
-import React from 'react'
-import { Card } from "react-bootstrap"
-import { CardInterface } from "../../global.model"
+import React from 'react';
+import { Card } from 'react-bootstrap';
+import { CardInterface } from '../../global.model';
 
 const OneCard: React.FC<CardInterface> = ({id, status, pairId, text, onClickCard, selectedCard}) => {
-    const baseClasses = 'p-3 text-center h-100 justify-content-center text-nowrap custom-cards'
+    const baseClasses = 'p-3 text-center h-100 justify-content-center text-nowrap custom-cards';
 
     const onClick = (pairId: string, id: string) => {
         if (id && onClickCard !== undefined && !status) {
-            onClickCard(pairId, id)
+            onClickCard(pairId, id);
         }
     }
 
@@ -26,4 +26,4 @@ const OneCard: React.FC<CardInterface> = ({id, status, pairId, text, onClickCard
     )
 }
 
-export default OneCard
+export default OneCard;

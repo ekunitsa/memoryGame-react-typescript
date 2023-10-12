@@ -1,54 +1,54 @@
-import React from 'react'
-import { useEffect, useState } from "react"
+import React from 'react';
+import { useEffect, useState } from 'react';
 
-import { CardInterface, GameFieldOptions, Options, SelectedCards } from "../../global.model"
+import { CardInterface, GameFieldOptions, Options, SelectedCards } from '../../global.model';
 
-import randomWords from 'random-words'
-import arrayShuffle from 'array-shuffle'
-import { Row, Container, Col } from "react-bootstrap"
-import { v4 as uuidv4 } from 'uuid'
+import randomWords from 'random-words';
+import arrayShuffle from 'array-shuffle';
+import { Row, Container, Col } from 'react-bootstrap';
+import { v4 as uuidv4 } from 'uuid';
 
-import OneCard from "../../components/OneCard"
-import { useNavigate } from 'react-router-dom'
-import Timer from '../../components/Timer'
-import Lifes from '../../components/Lifes'
+import OneCard from '../../components/OneCard';
+import { useNavigate } from 'react-router-dom';
+import Timer from '../../components/Timer';
+import Lifes from '../../components/Lifes';
 
-const pushToArray = (arr: object[], id: string, pairId: string, text: string, status: boolean ) => arr.push({id, pairId, text, status})
+const pushToArray = (arr: object[], id: string, pairId: string, text: string, status: boolean ) => arr.push({id, pairId, text, status});
 
 const PageGameField: React.FC<GameFieldOptions> = ({options, configDone}) => {
-    const navigate = useNavigate()
-    const [cards, setCards] = useState<CardInterface[] | null>(null)
-    const [selectedCards, setSelectedCards] = useState<SelectedCards[] | []>([])
-    const [lifes, setLifes] = useState<number | null>(options.lifes > 0 ? options.lifes : null)
-    const [gameStatus, setGameStatus] = useState<boolean>(true)
-    const [gameOver, setGameOver] = useState<boolean>(false)
+    const navigate = useNavigate();
+    const [cards, setCards] = useState<CardInterface[] | null>(null);
+    const [selectedCards, setSelectedCards] = useState<SelectedCards[] | []>([]);
+    const [lifes, setLifes] = useState<number | null>(options.lifes > 0 ? options.lifes : null);
+    const [gameStatus, setGameStatus] = useState<boolean>(true);
+    const [gameOver, setGameOver] = useState<boolean>(false);
 
     const restartGame = () =>{
-        setCards(null)
-        setSelectedCards([])
-        navigate('/')
+        setCards(null);
+        setSelectedCards([]);
+        navigate('/memory');
     }
 
     // generate pairs and field
     useEffect(() => {
         if (!configDone) {
             // check that the user bypassed the settings and went directly into the game
-            navigate('/')
+            navigate('/memory');
         }
         if (cards === null) {
             const generateCards = async (options: Options) => {
-                const arrayOfCards: CardInterface[] = []
-                const wordArray = randomWords(options.pairCount)
+                const arrayOfCards: CardInterface[] = [];
+                const wordArray = randomWords(options.pairCount);
 
                 for(let i = 0; i < options.pairCount; i++) {
-                    const pairId = uuidv4()
+                    const pairId = uuidv4();
                     const pairWord = wordArray[i];
 
-                    pushToArray(arrayOfCards, uuidv4(), pairId, pairWord, false)
-                    pushToArray(arrayOfCards, uuidv4(), pairId, pairWord, false)
+                    pushToArray(arrayOfCards, uuidv4(), pairId, pairWord, false);
+                    pushToArray(arrayOfCards, uuidv4(), pairId, pairWord, false);
                 }
 
-                setCards(arrayShuffle(arrayOfCards))
+                setCards(arrayShuffle(arrayOfCards));
             }
 
            generateCards(options);
@@ -59,27 +59,31 @@ const PageGameField: React.FC<GameFieldOptions> = ({options, configDone}) => {
         setTimeout(() => {
             if (selectedCards.length === 2) {
                 if (selectedCards[0].pairId === selectedCards[1].pairId) {
-                    setCards(prevState => prevState!.map(item => item.pairId === selectedCards[0].pairId ? {...item, status: true} : item))
+                    setCards(prevState => prevState!.map(item => item.pairId === selectedCards[0].pairId ? {...item, status: true} : item));
                 } else if (lifes !== null) {
-                    setLifes(prevState => prevState! - 1)
+                    setLifes(prevState => prevState! - 1);
                 }
 
-                setSelectedCards([])
+                setSelectedCards([]);
             }
-        }, 500)
+        }, 500);
     }, [selectedCards])
 
     useEffect(() => {
-        if (cards !== null) setGameStatus(!cards.every(item => item.status === true))
+        if (cards !== null) {
+            setGameStatus(!cards.every(item => item.status === true));
+        }
     }, [cards])
 
     useEffect(() => {
-        if (lifes === 0) gameIsOver()
+        if (lifes === 0) {
+            gameIsOver();
+        }
     }, [lifes])
 
     const gameIsOver = () => {
-        setGameStatus(false)
-        setGameOver(true)
+        setGameStatus(false);
+        setGameOver(true);
     }
 
     const onClickCard = (pairId:string, id: string) => {
@@ -87,7 +91,7 @@ const PageGameField: React.FC<GameFieldOptions> = ({options, configDone}) => {
             return;
         }
 
-        setSelectedCards(prevState => [...prevState, {pairId, id}])
+        setSelectedCards(prevState => [...prevState, {pairId, id}]);
     }
 
     return (

@@ -2,7 +2,6 @@ export interface Options {
     pairCount: number;
     time: number;
     lifes: number;
-    language: string;
 }
 
 export interface TimerInterface {
